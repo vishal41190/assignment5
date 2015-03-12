@@ -31,7 +31,7 @@ function frontPage(req, res) {
     });
 
    
-    
+    if(req.method === "POST"){
     if(req.url === "/play/rock"){
         random = getRandomInt(0,4);       
         randomAns =   weapon[random];
@@ -159,10 +159,10 @@ function frontPage(req, res) {
                 break;
         }
     }
-    
- 
     res.write(JSON.stringify({outcome:outcome, wins:wins,losses:losses,ties:ties}));
-    res.end();
+   
+    }
+     res.end();
 }
 
 var server = http.createServer(frontPage);

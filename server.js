@@ -7,10 +7,7 @@ var weapon = [
             "rock",
              "lizard",
              "spock"]
-//Used following websites as reference
-    //http://getbootstrap.com/getting-started/
-    //http://getbootstrap.com/css/
-    //http://getbootstrap.com/components/
+
 
 var outcome;
 var wins=0;
@@ -30,14 +27,14 @@ function getRandomInt(min, max) {
 
 function frontPage(req, res) {
     res.writeHead(200, {
-        "Content-Type": "text/html"
+        "Content-Type": "application/json"
     });
 
    
     
     if(req.url === "/play/rock"){
- random = getRandomInt(0,4);       
-randomAns =   weapon[random];
+        random = getRandomInt(0,4);       
+        randomAns =   weapon[random];
         switch(randomAns){
                 case "rock":
                 outcome="tie";
@@ -163,14 +160,12 @@ randomAns =   weapon[random];
         }
     }
     
-    console.log(random+randomAns);
-    
-    res.write("<html><body>"+random+randomAns+" Computer="+randomAns+" result="+outcome+" win="+wins+" losses="+losses+" ties="+ties+"</body></html>");
-        
-        res.end();
+ 
+    res.write(JSON.stringify({outcome:outcome, wins:wins,losses:losses,ties:ties}));
+    res.end();
 }
 
 var server = http.createServer(frontPage);
 server.listen(3000);
 var address = server.address();
-console.log("nudge is listening at http://localhost:" + address.port + "/");
+console.log("game is listening at http://localhost:" + address.port + "/");
